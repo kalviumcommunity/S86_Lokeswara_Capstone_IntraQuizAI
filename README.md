@@ -1,5 +1,5 @@
 
-# 🧠 IntraQuiz – Online Interactive Quiz Platform
+# 🧠 IntraQuiz – AI Powered Online Interactive Quiz Platform
 
 ## 📌 Capstone Idea
 
