@@ -1,4 +1,3 @@
-
 # 🧠 IntraQuiz – Online Interactive Quiz Platform
 
 ## 📌 Capstone Idea
