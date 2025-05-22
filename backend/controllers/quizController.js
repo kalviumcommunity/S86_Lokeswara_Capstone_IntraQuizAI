@@ -80,3 +80,42 @@ export const submitAnswers = async (req, res) => {
     res.status(500).json({ error: error.message, success: false });
   }
 };
+
+
+// Get Generated quiz history
+export const history = async (req, res) => {
+  const userId = req.userId;
+  try {
+    let history = await Quiz.find({ user: userId })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ history, success: true });
+  } catch (error) {
+    console.log("Error fetching history:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+
+// Get quiz by ID
+export const getQuizById = async (req, res) => {
+  const { quizId } = req.params;
+
+  try {
+    const quiz = await Quiz.findById(quizId);
+
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found", success: false });
+    }
+
+    res.status(200).json({ quiz, success: true });
+  } catch (error) {
+    console.log("Error fetching quiz:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
