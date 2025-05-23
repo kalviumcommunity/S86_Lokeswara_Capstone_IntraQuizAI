@@ -80,3 +80,89 @@ export const submitAnswers = async (req, res) => {
     res.status(500).json({ error: error.message, success: false });
   }
 };
+
+
+// Get Generated quiz history
+export const history = async (req, res) => {
+  const userId = req.userId;
+  try {
+    let history = await Quiz.find({ user: userId })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ history, success: true });
+  } catch (error) {
+    console.log("Error fetching history:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+
+// Get quiz by ID
+export const getQuizById = async (req, res) => {
+  const { quizId } = req.params;
+
+  try {
+    const quiz = await Quiz.findById(quizId);
+
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found", success: false });
+    }
+
+    res.status(200).json({ quiz, success: true });
+  } catch (error) {
+    console.log("Error fetching quiz:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+
+
+
+// Delete quiz by ID
+export const deleteQuiz = async (req, res) => {
+  const { quizId } = req.params;
+
+  try {
+    const quiz = await Quiz.findById(quizId);
+
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found", success: false });
+    }
+
+    if (quiz.user.toString() !== req.userId) {
+      return res.status(403).json({ message: "Unauthorized", success: false });
+    }
+
+    await Quiz.findByIdAndDelete(quizId);
+
+    res.status(200).json({ message: "Quiz deleted successfully", success: true });
+  } catch (error) {
+    console.log("Error deleting quiz:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+
+// Delete all quiz history for a user
+export const deleteAllQuizzes = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const result = await Quiz.deleteMany({ user: userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "No quizzes found to delete", success: false });
+    }
+
+    res.status(200).json({ message: "All quizzes deleted successfully", success: true });
+  } catch (error) {
+    console.log("Error deleting all quizzes:", error);
+    res.status(500).json({ message: "Internal Server Error", success: false });
+  }
+};
