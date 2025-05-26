@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-
-
 const quizSchema = new mongoose.Schema(
   {
     user: {
@@ -9,26 +7,32 @@ const quizSchema = new mongoose.Schema(
       ref: "User",
       required: false,
     },
+
     topic: {
       type: String,
       required: true,
     },
+
     score: {
       type: Number,
       required: true,
     },
+
     totalQuestions: {
       type: Number,
       required: true,
     },
+
     correctAnswers: {
       type: Number,
       required: true,
     },
+
     wrongAnswers: {
       type: Number,
       required: true,
     },
+
     submitData: [
       {
         question: { type: String, required: true },
@@ -37,12 +41,15 @@ const quizSchema = new mongoose.Schema(
         _id: false,
       },
     ],
+
     takenAt: {
       type: Date,
       default: Date.now,
     },
+
   },
   { timestamps: true }
+  
 );
 
 const Quiz = mongoose.model("Quiz", quizSchema);
