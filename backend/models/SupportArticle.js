@@ -13,12 +13,11 @@ const articleSchema = new mongoose.Schema(
       required: true,
     },
 
-    author: {
+    author:{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: false,
+      required: [true, "Author is Required"]
     },
-
     createdAt: {
       type: Date,
       default: Date.now,

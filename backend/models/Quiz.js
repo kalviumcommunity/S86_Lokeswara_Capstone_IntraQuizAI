@@ -5,7 +5,7 @@ const quizSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: false,
+      required: [ true, "User is Required" ]
     },
 
     topic: {
