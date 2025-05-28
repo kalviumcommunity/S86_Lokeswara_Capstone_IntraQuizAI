@@ -27,8 +27,9 @@ app.use("/iq/articles", articleRoute);
 
 
 app.get('/', (req, res) => {
-  res.send('IntraQuiz AI Backend Running Successfully');
+  res.status(200).json({ message: 'IntraQuiz AI Backend Running Successfully'});
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
