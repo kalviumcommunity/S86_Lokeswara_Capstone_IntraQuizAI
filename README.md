@@ -17,6 +17,14 @@
 
 ---
 
+### Backend Deployment :
+
+https://intraquizai-capstone.onrender.com/
+
+### Frontend Deployment :
+
+**Under Progress**
+
 ## 🎯 Objective
 
 Develop a full-stack web application that empowers users to:
