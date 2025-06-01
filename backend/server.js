@@ -18,11 +18,13 @@ connectDB();
 // Importing Routes
 import quizRoute from "./routes/quizRoutes.js";
 import articleRoute from "./routes/articleRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 
 // API Routes
 app.use("/iq/quiz", quizRoute);
 app.use("/iq/articles", articleRoute);
+app.use("/iq/auth", authRoutes);
 
 
 

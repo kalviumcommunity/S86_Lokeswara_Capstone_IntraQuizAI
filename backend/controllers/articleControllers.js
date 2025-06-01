@@ -24,11 +24,10 @@ export const createArticle = async (req, res) => {
   }
 };
 
-
 // Get all articles
 export const getArticles = async (req, res) => {
   try {
-    const articles = await Article.find().sort({ createdAt: -1 });
+    const articles = await Article.find().populate("author", "name email").sort({ createdAt: -1 });
     res.status(200).json({ articles, success: true });
   } catch (error) {
     console.log("Error fetching articles:", error);
@@ -36,13 +35,12 @@ export const getArticles = async (req, res) => {
   }
 };
 
-
 // Get a single article by ID
 export const getArticleById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const article = await Article.findById(id);
+    const article = await Article.findById(id).populate("author", "name email");
 
     if (!article) {
       return res.status(404).json({ message: "Article not found", success: false });
@@ -54,7 +52,6 @@ export const getArticleById = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
-
 
 // Update an article
 export const updateArticle = async (req, res) => {
@@ -70,8 +67,8 @@ export const updateArticle = async (req, res) => {
 
     article.title = title || article.title;
     article.content = content || article.content;
-    article.updatedAt = Date.now(); 
-    
+    article.updatedAt = Date.now(); // Update the timestamp
+
     await article.save();
     res.status(200).json({ message: "Article updated successfully", success: true, article });
   } catch (error) {
@@ -79,7 +76,6 @@ export const updateArticle = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
-
 
 // Delete an article
 export const deleteArticle = async (req, res) => {
