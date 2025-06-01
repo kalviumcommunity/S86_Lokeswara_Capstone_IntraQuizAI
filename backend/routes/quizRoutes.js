@@ -1,21 +1,23 @@
 import express from "express";
-import { generateQuizz, submitAnswers, history, getQuizById, deleteQuiz, deleteAllQuizzes} from "../controllers/quizController.js";
+import { generateQuizz,history,submitAnswers, getQuizById, updateQuiz, deleteQuiz, deleteAllQuizzes } from "../controllers/quizController.js";
+import { isAuthenticated } from "../middleware/isAuthenticated.js";
 
 const router = express.Router();
 
 
-router.post("/generate", generateQuizz);
+router.post("/generate",isAuthenticated, generateQuizz);
 
-router.post("/submit", submitAnswers);
+router.post("/submit", isAuthenticated, submitAnswers);
+router.get("/history", isAuthenticated, history);
 
-router.get("/history", history);
+router.get("/", isAuthenticated, getQuizById );
 
-router.get("/:quizId", getQuizById );
 
-router.delete("/:quizId", deleteQuiz );
+router.put("/:quizId", isAuthenticated, updateQuiz);
 
-router.delete("/history/all", deleteAllQuizzes );
+router.delete("/:quizId", isAuthenticated, deleteQuiz );
+
+router.delete("/history/all", isAuthenticated, deleteAllQuizzes );
 
 
 export default router;
-
