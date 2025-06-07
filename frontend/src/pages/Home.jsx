@@ -19,7 +19,7 @@ const Home = () => {
 
                 <Link to="/quiz">
                     <button className="px-10 py-4 bg-blue-600 dark:bg-blue-500 text-white text-lg font-semibold rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mb-12">
-                        🚀 Start Quizzing
+                        🚀 Test your Self
                     </button>
                 </Link>
 
