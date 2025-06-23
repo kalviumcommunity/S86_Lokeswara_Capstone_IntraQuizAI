@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaUserCircle, FaMoon, FaSun } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { setUser } from "../redux/slices/authSlice";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const Navbar = () => {
+  const { user } = useSelector((store) => store.auth);
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const { user } = []
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const profileRef = useRef();
 
@@ -21,6 +23,7 @@ const Navbar = () => {
         withCredentials: true,
       });
       if (res.data.success) {
+        dispatch(setUser(null));
         toast.success(res.data.message);
         setIsOpen(false);
         navigate("/");
@@ -47,10 +50,12 @@ const Navbar = () => {
   return (
     <nav className="bg-white dark:bg-[#0a0f2c] text-black dark:text-white shadow-md fixed top-0 w-full z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo */}
         <Link to="/" className="text-3xl font-extrabold text-blue-500 tracking-wide">
           Intra<span className="text-black dark:text-white">Quiz</span>
         </Link>
 
+        {/* Desktop Nav */}
         <div className="hidden md:flex space-x-6 items-center text-sm font-medium">
           <Link to="/" className="hover:text-blue-400 transition">Home</Link>
           <Link to="/quiz" className="hover:text-blue-400 transition">Test Yourself</Link>
@@ -86,6 +91,7 @@ const Navbar = () => {
         
         </div>
 
+        {/* Mobile Toggle */}
         <div
           className="md:hidden text-2xl text-blue-400 cursor-pointer"
           onClick={toggleMenu}
@@ -94,6 +100,7 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Mobile Dropdown */}
       {isOpen && (
         <div className="md:hidden bg-white dark:bg-[#0a0f2c] px-6 pb-4 text-black dark:text-white text-sm animate-fade-down space-y-2">
           <Link to="/" onClick={toggleMenu} className="block py-2 hover:text-blue-400">Home</Link>
