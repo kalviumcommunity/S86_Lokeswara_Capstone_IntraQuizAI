@@ -1,0 +1,25 @@
+body, .app-wrapper {
+  background: linear-gradient(to bottom, white, #f3f4f6);
+  color: #111827; /* text-gray-900 */
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.dark-mode {
+  background: linear-gradient(to bottom, #0a0f2c, #131a44, #1b235f);
+  color: white;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.dark-mode button {
+  background-color: #2563eb;
+  color: white;
+}
+
+button {
+  transition: background-color 0.3s ease;
+}
+
+
+.main-content {
+  padding-top: 60px;
+}
