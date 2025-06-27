@@ -28,7 +28,7 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        `${baseUrl}/auth/register`,
+        `${baseUrl}/user/register`,
         { name, email, password },
         { withCredentials: true }
       );
@@ -131,7 +131,7 @@ const Signup = () => {
 
         {/* Google OAuth Button */}
         <a
-          href={`http://localhost:5000/iq/googleauth/google`}
+          href={`http://localhost:8000/iq/googleauth/google`}
           className="w-full py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-all duration-300 text-center block"
         >
           Continue with Google

@@ -7,6 +7,8 @@ import Navbar from './components/Navbar'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
+import OauthSuccess from './pages/OauthSuccess';
+
 
 
 import { Toaster } from 'react-hot-toast';
@@ -24,6 +26,8 @@ function App() {
           <Route path="/login" element={!user ? <Login /> : <Home />} />
           <Route path="/signup" element={!user ? <Signup /> : <Home />} />
           <Route path="/dashboard" element={user ? <Dashboard /> : <Login />} />
+                  <Route path="/oauth-success" element={<OauthSuccess />} />
+
 
         </Routes>
       </div>

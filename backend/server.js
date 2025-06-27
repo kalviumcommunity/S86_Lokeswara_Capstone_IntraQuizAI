@@ -1,10 +1,14 @@
 import express from 'express';
 import dotenv from "dotenv";
+dotenv.config();
 import cors from "cors";
+import session from "express-session";
+import cookieParser from "cookie-parser";
+import passport from "passport";
+import "./config/googlePassport.js";
 import { connectDB } from "./config/db.js";
 
 
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -19,6 +23,21 @@ app.use(
 
 app.use(express.json());
 
+app.use(cookieParser());
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
 // MongoDB Connection 
 connectDB();
 
@@ -27,12 +46,14 @@ connectDB();
 import quizRoute from "./routes/quizRoutes.js";
 import articleRoute from "./routes/articleRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-
+import googleAuthRoutes from "./routes/googleAuthRoutes.js";
 
 // API Routes
 app.use("/iq/quiz", quizRoute);
 app.use("/iq/articles", articleRoute);
+// Auth Routes
 app.use("/iq/auth", authRoutes);
+app.use("/iq/googleauth", googleAuthRoutes);
 
 
 
