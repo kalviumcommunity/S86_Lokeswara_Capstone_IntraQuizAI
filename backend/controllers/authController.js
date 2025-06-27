@@ -1,5 +1,6 @@
 import { generateToken } from "../config/generateToken.js";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 import { sendEmail } from "../utils/sendEmail.js";
 import User from "../models/User.js";
 
@@ -192,3 +193,24 @@ export const deleteProfile = async (req, res) => {
 };
 
 
+
+export const getLoggedInUser = async (req, res) => {
+  try {
+
+    const token = req.cookies.quizToken;
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.userId).select("-password");
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error in getLoggedInUser:", error);
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
